@@ -1,0 +1,98 @@
+import datetime
+
+def gettime():
+    return datetime.datetime.now()
+def take(rcjv):
+    if rcjv == 1:
+        rcjv_a = int(input("enter 1 for food and 2 for exercise : "))
+        if rcjv_a == 1:
+            rcjv_a_a = input("what food did you eat \n")
+            with open("vansh-food.txt","a") as i:
+                i.write(str([str(gettime())]) + ": " + rcjv_a_a + "\n")
+                print("successfully written")
+        elif rcjv_a == 2:
+            rcjv_a_a =  input("what type of exercise did you do today\n")
+            with open("vansh-exercise.txt", "a") as i:
+                i.write(str([str(gettime())]) + ": " + rcjv_a_a + "\n")
+                print("successfully written")
+    elif rcjv == 2:
+        rcjv_a = int(input("enter 1 for food and 2 for exercise : "))
+        if rcjv_a == 1:
+            rcjv_a_a = input("what food did you eat \n")
+            with open("siddhant-food.txt","a") as i:
+                i.write(str([str(gettime())]) + ": " + rcjv_a_a + "\n")
+                print("successfully written")
+        elif rcjv_a == 2:
+            rcjv_a_a =  input("what type of exercise did you do today\n")
+            with open("siddhant-exercise.txt", "a") as i:
+                i.write(str([str(gettime())]) + ": " + rcjv_a_a + "\n")
+                print("successfully written")
+    elif rcjv == 3:
+        rcjv_a = int(input("enter 1 for food and 2 for exercise : "))
+        if rcjv_a == 1:
+            rcjv_a_a = input("what food did you eat \n")
+            with open("charchit-food.txt","a") as i:
+                i.write(str([str(gettime())]) + ": " + rcjv_a_a + "\n")
+                print("successfully written")
+        elif rcjv_a == 2:
+            rcjv_a_a =  input("what type of exercise did you do today\n")
+            with open("charchit-exercise.txt", "a") as i:
+                i.write(str([str(gettime())]) + ": " + rcjv_a_a + "\n")
+                print("successfully written")
+
+
+
+def retrieve(k):
+    if k == 1:
+        n1 = int(input("enter 1 for food and 2 for exercise : "))
+        if n1 == 1:
+            with open("vansh-food.txt") as Cr7:
+                for i in Cr7:
+                    print(i, end="")
+                    input()
+
+        elif n1 == 2:
+            with open("vansh-exercise.txt") as messi:
+                 for i in messi:
+                     print(i, end="")
+
+    elif k == 2:
+        n1 = int(input("enter 1 for food and 2 for exercise : "))
+        if n1 == 1:
+            with open("siddhant-food.txt") as Cr7:
+                for i in Cr7:
+                    print(i, end="")
+
+        elif n1 == 2:
+            with open("siddhant-exercise.txt") as messi:
+                 for i in messi:
+                     print(i, end="")
+
+    elif k == 3:
+        n1 = int(input("enter 1 for food and 2 for exercise : "))
+        if n1 == 1:
+            with open("charchit-food.txt") as Cr7:
+                for i in Cr7:
+                    print(i, end="")
+
+        elif n1 == 2:
+            with open("charchit-exercise.txt") as messi:
+                 for i in messi:
+                     print(i, end="")
+
+
+
+    input()
+
+print("Hello welcome to BLUETON health management system")
+a=int(input("press 1 for log the value and 2 for retrieve : "))
+if a == 1:
+    b = int(input("press 1 for vansh, 2 for siddhant, and 3 for charchit : "))
+    take(b)
+
+elif a == 2:
+    b = int(input("press 1 for vansh, 2 for siddhant, and 3 for charchit : "))
+    retrieve(b)
+
+else:
+    print(":error:")

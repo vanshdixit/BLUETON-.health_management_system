@@ -1,0 +1,86 @@
+import random
+n = 9
+g = 0
+my_point = 0
+your_point =0
+list = ("s" , "p" , "sc")
+def spt():
+    global g
+    global your_point
+    global my_point
+    while g < 9:
+        n1 = input("type 's' for stone   'p' for paper  and  'sc' for scissor : ")
+        choice = random.choice(list)
+        global n1
+
+        if n1 == choice:
+            print(f"we both chose the same ,that is we both chose {n1}")
+            print("we both get no points")
+
+        elif n1 == "p" and choice == "s":
+            your_point = your_point + 1
+            print("good choice....")
+            print(f"as you chose   '{n1}'   and i chose  '{choice}'   you win")
+            print(f"\t\t\t\t\t\t\t\t\tyour point = {your_point} and my point = {my_point}")
+            print(f"you have niw {9 - g} guesses left ")
+            g = g + 1
+
+
+        elif n1 == "sc" and choice == "s":
+            my_point = my_point + 1
+            print("bad choice....")
+            print(f"as you chose   '{n1}'   and i chose   '{choice}'   i win")
+            print(f"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tyour point = {your_point} and my point = {my_point}")
+            print(f"you have niw {9 - g} guesses left ")
+            g = g + 1
+
+        elif n1 == "s" and choice == "p":
+            my_point = my_point + 1
+            print("bad choice....")
+            print(f"as you chose   '{n1}'   and i chose   '{choice}'   i win")
+            print(f"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tyour point = {your_point} and my point = {my_point}")
+            print(f"you have niw {9 - g} guesses left ")
+            g = g + 1
+
+        elif n1 == "sc" and choice == "p":
+            your_point = your_point + 1
+            print("good choice....")
+            print(f"as you chose   '{n1}'   and i chose   '{choice}'   you win")
+            print(f"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tyour point = {your_point} and my point = {my_point}")
+            print(f"you have niw {9 - g} guesses left ")
+            g = g + 1
+
+        elif n1 == "p" and choice == "sc":
+            your_point = your_point + 1
+            print("good choice....")
+            print(f"as you chose   '{n1}'   and i chose   '{choice}'   you win")
+            print(f"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tyour point = {your_point} and my point = {my_point}")
+            print(f"you have niw {9 - g} guesses left ")
+            g = g + 1
+
+        elif n1 == "s" and choice == "sc":
+            your_point = your_point + 1
+            print("good choice....")
+            print(f"as you chose   '{n1}'   and i chose   '{choice}'   you win")
+            print(f"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tyour point = {your_point} and my point = {my_point}")
+            print(f"you have niw {9 - g} guesses left ")
+            g = g + 1
+
+        else:
+            print("please enter a valid input.")
+
+    if your_point > my_point:
+        print(f"you points are {your_point} and my points are {my_point} therefore you win")
+
+    elif my_point > your_point:
+        print(f"you points are {your_point} and my points are {my_point} therefore i win")
+    print("do you want to play again?")
+    n1 = input("type '1' for 'yes' and '2' for 'no' ")
+    if n1 == 1:
+        spt()
+    elif n1 == 2:
+        print("thanks for visitng.")
+    else:
+        print("!error!")
+
+spt()

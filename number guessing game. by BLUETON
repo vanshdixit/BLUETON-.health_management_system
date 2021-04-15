@@ -1,0 +1,46 @@
+import random
+list = random.randint(0 ,50)
+g = 0
+def guess_a_number_game():
+    global g
+    while (g <= 9):
+        g = g + 1
+        if g > 9:
+            print("game over, your guessing limits are over")
+            print(f"by the way.... the correct number was {list}")
+            break
+        else:
+            n1 = int(input("guess a number : "))
+            if n1 == list:
+                print(f"you did it, and you did it in '{g}' time\n")
+                print("do you want to play again?")
+                n2 = input("type '1' for 'yes' and '2' for 'no' : ")
+                if n2 == "1":
+                    guess_a_number_game()
+                elif n2 == "2":
+                    print("thanks for visiting.")
+                    break
+                break
+            elif n1 > list:
+                print("dude...you went too high let me give you a hint, guess a number below '100' ")
+                print(f"you now have {9 - g} guesses left")
+            elif n1 > list and n1 < list:
+                print("your are very near my number")
+                print(f"you now have {9 - g} guesses left")
+            elif n1 > list:
+                print("your number is greater than the real number")
+                print(f"you now have {9 - g} guesses left")
+            elif n1 < list:
+                print("your number is smaller than my number")
+                print(f"you now have {9 - g} guesses left")
+            continue
+print(list)
+n1 = input("type '1' for 'yes' and '2' for 'no' : ")
+if n1 == "1":
+ print("you will be given 9 guesses\nchoose a number between 0 to 50 including 0 and 50\ni will to choose a number\nand if youb guess the write number ,you win")
+ guess_a_number_game()
+elif n1 == "2":
+ print("ok ,no problem :) let's get ahead")
+
+
+guess_a_number_game()

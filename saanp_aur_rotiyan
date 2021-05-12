@@ -1,0 +1,265 @@
+# ------------------------------------------------------------  code for the game  ------------------------------------
+
+# important modules
+# ------------------------------
+import pygame
+import random
+import os
+import time
+pygame.init()
+pygame.mixer.init()
+# ------------------------------
+# Colors
+# ------------------------------
+white = (255, 255, 255)
+green = (0,128,0)
+red = (255, 0, 0)
+black = (0, 0, 0)
+blue = (0, 0, 225)
+skyblue = (135,206,235)
+light_cream = (255, 253, 208)
+purple = (129 ,0 ,128)
+yellow = (225, 225, 0 )
+gold = (255,215,0)
+# ------------------------------
+# Creating window
+# ------------------------------
+canvas_width = 1550
+canvas_height = 800
+canvas = pygame.display.set_mode((canvas_width, canvas_height))
+# ------------------------------
+# background image
+background_image = pygame.image.load('backimage.jpg')
+background_image = pygame.transform.scale(background_image ,(canvas_width ,canvas_height)).convert_alpha()
+game_over_image_background = pygame.image.load('gameovertry.jpg')
+game_over_image_background = pygame.transform.scale(game_over_image_background ,(canvas_width ,canvas_height)).convert_alpha()
+welcome_image = pygame.image.load('welcome_io.jpg')
+welcome_image = pygame.transform.scale(welcome_image ,(canvas_width ,canvas_height)).convert_alpha()
+# ------------------------------
+# Game Title
+# ------------------------------
+pygame.display.set_caption("saap aur rotiyan")
+pygame.display.update()
+# ------------------------------
+# music
+# ------------------------------
+music = ('back.mp3.mp3', 'playdate.mp3', 'vishnu.mp3.mp3')
+choice = random.choice(music)
+# ------------------------------
+# creating fonts and time/second unit for the game to run
+# ------------------------------
+clock = pygame.time.Clock()
+font = pygame.font.SysFont("georgia", 35)
+font2 = pygame.font.SysFont("arial", 20)
+font3 = pygame.font.SysFont("georgia", 20)
+# ------------------------------
+# very important user defined functions
+# ------------------------------
+def text_on_the_screen(text, color, x, y):
+    canvas_font = font.render(text, True, color)
+    canvas.blit(canvas_font, [x,y])
+
+def text_on_the_screen2(text, color, x, y):
+    canvas_font = font3.render(text, True, color)
+    canvas.blit(canvas_font, [x, y])
+
+def text_on_the_screen3(text, color, x, y):
+    canvas_font = font2.render(text, True, color)
+    canvas.blit(canvas_font, [x, y])
+
+def plot_snake(canvas, color, snk_list, snake_size):
+    for x,y in snk_list:
+        pygame.draw.circle(canvas, color, [x, y], snake_size)
+        # pygame.draw.circle(canvas, roti_color, [roti_x, roti_y], roti_size / 2)
+        
+def blueton():
+    canvas.fill(black)
+    text_on_the_screen("blueton", white, 400, 400)
+    time.sleep(5)
+# ------------------------------
+# creating the games welcoming or introducing window
+# ------------------------------
+def intro():
+    exit_game = False
+    while not exit_game:
+       canvas.blit(welcome_image ,(0 ,0))
+       text_on_the_screen("press enter to start the game...." ,gold ,1050 ,750)
+       # pygame.draw.line(canvas, red, (20, 70), (1509, 70), 4)
+       # pygame.draw.line(canvas, red, (240, 20), (240, 72), 4)
+       # pygame.draw.line(canvas, red, (20, 20), (240, 20), 4)
+       # pygame.draw.line(canvas, red, (20, 20), (20, 72), 4)
+       network = time.strftime("%c")
+       text_on_the_screen3(f"{network}", red, 1300, 25)
+       text_on_the_screen2("RULES-:", gold, 5 ,5)
+       text_on_the_screen2("# there is a 'saap(snake)' and a 'roti(food)'", gold, 30, 30)
+       text_on_the_screen2("# as the snake(you) eat the food", gold, 30, 50)
+       text_on_the_screen2("your length increases with score", red, 325 ,50)
+       text_on_the_screen2("# set a highscore and try to beat ", gold, 30, 70)
+       text_on_the_screen2("your own highscore", red, 320 ,70)
+       text_on_the_screen2("enjoy....", gold, 30, 90)
+       exit_game = False
+       for event in pygame.event.get():
+          if event.type == pygame.QUIT:
+                import dialog_box
+          if event.type == pygame.KEYDOWN:
+              if event.key == pygame.K_RETURN:
+                  for i in range(10):
+                      pygame.mixer.music.load(choice)
+                      pygame.mixer.music.play()
+                      gameloop()
+
+
+       pygame.display.update()
+       clock.tick(60)
+# ------------------------------
+#creating Game Loop
+# ------------------------------
+def gameloop():
+    # Game specific variables
+    exit_game = False
+    game_over = False
+    snake_x = 45
+    snake_y = 55
+    velocity_x = 0
+    velocity_y = 0
+    with open("highscore.txt", "r") as i:
+        highscore = i.read()
+    roti_x = random.randint(20, canvas_width / 2)
+    roti_y = random.randint(20, canvas_height / 2)
+    roti_size = 20
+    list = (red ,blue ,black)
+    roti_color = random.choice(list)
+    score = 0
+    initial_velocity = 5
+    snake_size = 3
+    fps = 60
+    snake_list = []
+    snake_length = 1
+    snake_color = black
+    # if (not os.path.exists("hiscore.txt")):
+    #     # with open("hiscore.t")
+
+    while not exit_game:
+        if game_over:
+            with open("highscore.txt", "w") as i:
+                   i.write(str(highscore))
+            canvas.fill(light_cream)
+            canvas.blit(game_over_image_background ,(0 ,0))
+            text_on_the_screen("GAME OVER! press                    key to restart....",gold,400,530)
+            text_on_the_screen("'ENTER'", light_cream, 725, 530)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    exit_game = True
+
+
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        gameloop()
+
+        else:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    exit_game = True
+
+
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RIGHT:
+                        velocity_x = +5
+                        velocity_y = 0
+
+                    if event.key == pygame.K_LEFT:
+                        velocity_x = -5
+                        velocity_y = 0
+
+                    if event.key == pygame.K_UP:
+                        velocity_y = -5
+                        velocity_x = 0
+
+                    if event.key == pygame.K_DOWN:
+                        velocity_y = +5
+                        velocity_x = 0
+
+                    if event.key == pygame.K_v:
+                        score += 5
+
+
+
+            snake_x = snake_x + velocity_x
+            snake_y = snake_y + velocity_y
+
+            if abs(snake_x - roti_x)< 10 and abs(snake_y - roti_y)<10:
+                score +=10
+                roti_x = random.randint(40, canvas_width)
+                roti_y = random.randint(40, canvas_height)
+                roti_color = random.choice(list)
+                snake_length +=5
+                if snake_length > 30:
+                    snake_color = green
+                if snake_length > 60:
+                    snake_color = purple
+                if snake_length > 100:
+                    snake_color = blue
+                if snake_length > 150:
+                    snake_color = red
+
+                # if roti_size == 30:
+                #     score += 10
+                # if roti_size == 40:
+                #     score += 20
+
+                if score > int(highscore):
+                    highscore = score
+
+            canvas.fill(light_cream)
+            canvas.blit(background_image ,(0 ,0))
+            pygame.draw.line(canvas, red, (20, 70), (1509, 70),4)
+            pygame.draw.line(canvas ,red ,(240, 20), (240, 72),4)
+            pygame.draw.line(canvas, red, (20, 20), (240, 20),4)
+            pygame.draw.line(canvas ,red ,(20, 20), (20, 72),4)
+            text_on_the_screen("Score: " + str(score) ,snake_color ,40 , 30)
+            pygame.draw.line(canvas, red, (1130, 20), (1130, 72), 4)
+            pygame.draw.line(canvas, red, (1130, 20), (1509, 20), 4)
+            pygame.draw.line(canvas, red, (1509, 20), (1509, 72), 4)
+            text_on_the_screen("HIGHSCORE : " + str(highscore),snake_color,1150, 30)
+            network2 = time.strftime("%c")
+            text_on_the_screen3("TIME : " + network2 ,snake_color ,30 ,90)
+            text_on_the_screen("\"saanp aur rotiyan\"", snake_color, 550 ,25)
+
+
+
+
+            pygame.draw.circle(canvas, roti_color, [roti_x ,roti_y],roti_size/2)
+
+
+
+            head = []
+            head.append(snake_x)
+            head.append(snake_y)
+            snake_list.append(head)
+
+            if len(snake_list)>snake_length:
+                del snake_list[0]
+
+            if head in snake_list[:-1]:
+                game_over = True
+
+            if snake_x < 0 or snake_x > canvas_width or snake_y < 0 or snake_y > canvas_height:
+                game_over = True
+
+            plot_snake(canvas, snake_color, snake_list, snake_size)
+        pygame.display.update()
+        clock.tick(fps)
+
+
+    pygame.quit()
+    quit()
+
+
+# calling the user defined functions
+# ------------------------------
+intro()
+blueton()
+# ------------------------------
+
+# ------------------------------------------------------------outro----------------------------------------------------
